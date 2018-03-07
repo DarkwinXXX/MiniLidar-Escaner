@@ -88,7 +88,7 @@ void sendMeasurement() {
   digitalWrite(azul, LOW);
   //Obtener coordenadas esféricas
   r = myLidarLite.distance(false);
-  theta = (float)reemplazo * PI / 180.0f;
+  theta = (float)reemplazo * PI / 360.0f;
   phi = (float)pitchAngle * PI / 180.0f;
 
   // Convertir y enviarlos
@@ -99,17 +99,17 @@ void sendMeasurement() {
 }
 
 void sensar() {
-  myFile = SD.open("log.txt", FILE_WRITE);
+  myFile = SD.open("xyz.txt", FILE_WRITE);
   delay(5000);// espera
 
   if (myFile && bandera == true) {
 
     digitalWrite(rojo, LOW);
-    //Barrido Yaw servomotor
+    //Barrido Yaw paso a passo
     for (int b = 0; b <= steps; b++) {
       digitalWrite(dirPin, HIGH);//determinas direccion
       reemplazo = b;
-      reemplazo = map(reemplazo, 0, 200, 0, 180);
+      reemplazo = map(reemplazo, 0, 200, 0, 360);
       digitalWrite(stepPin, HIGH);
       delayMicroseconds(microPausa);
       digitalWrite(stepPin, LOW);
